@@ -1,0 +1,47 @@
+<div class="container">
+    <p id="notice"><%= notice %></p>
+
+    <div id="myRow">
+        <p class:"col-2", id="header">Messages</p>
+        <% if user_signed_in? %>
+        <%= link_to 'New Message', new_topic_path, class:"col-2", id:"button"%>
+        <% else %>
+        <% end %>
+    </div>
+    <hr>
+    
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th id="t1">Title</th>
+          <th id="t2">Content</th>
+          <th id="t3">User</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @topics.each do |topic| %>
+          <tr>
+            <td><%= topic.title %></td>
+            <td><%= topic.content %></td>
+            <td><%= topic.user.email %></td>
+            <% if topic.user == current_user %>
+            <td><%= link_to 'Show', topic %></td>
+            <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
+            <td><%= link_to 'Delete', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% else %>
+            <td><%= link_to 'Show', topic %></td>
+            <td>Edit</td>
+            <td>Delete</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+</div>
+
+
+
+

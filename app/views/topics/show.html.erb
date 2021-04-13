@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+<div id="show-row">
+<div id="show-col-2-left">
+<p>
+  <strong>Title:</strong>
+  <%= @topic.title %>
+</p>
+
+<p>
+  <strong>User:</strong><br>
+  <%= @topic.user.email %>
+</p>
+
+<p>
+  <strong>Content:</strong><br>
+  <%= @topic.content %>
+</p>
+<br>
+<br>
+<br>
+
+
+
+<% if @topic.user == current_user %>
+<%= link_to 'Edit', edit_topic_path(@topic) %> | 
+<%= link_to 'Back', topics_path %>
+<% else %>
+<%= link_to 'Back', topics_path %>
+<% end %>
+
+<h4>Comment: </h4>
+
+
+<%= form_for ([@topic, Comment.new]) do |f| %>
+
+<% if user_signed_in? %>
+<%= f.text_area :content %>
+<%= f.hidden_field :user_id, :value => current_user.id %><br>
+<%= f.submit %>
+<% else %>
+<p>Login before comment...</p>
+<%= link_to 'Sign in', new_user_session_path %>
+ | 
+<%= link_to 'Sign up', new_user_registration_path %>
+<% end %>
+
+<% end %>
+</div>
+
+<div id="show-col-2-right">
+<h4>Comments:</h4>
+<%= render partial: 'comments/comment', collection: @comments %>
+</div>
+</div>
+</div>
